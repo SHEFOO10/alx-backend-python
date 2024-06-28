@@ -4,6 +4,7 @@ from unittest.mock import patch, Mock
 from utils import access_nested_map, get_json
 from parameterized import parameterized
 import requests
+from typing import Dict, Tuple, Union
 
 
 class TestAccessNestedMap(TestCase):
@@ -13,7 +14,12 @@ class TestAccessNestedMap(TestCase):
         ({"a": {"b": 2}}, ("a",), {'b': 2}),
         ({"a": {"b": 2}}, ("a", "b"), 2)
     ])
-    def test_access_nested_map(self, map, path, expected):
+    def test_access_nested_map(
+          self,
+          map: Dict,
+          path: Tuple[str],
+          expected: Union[Dict, str]
+          ) -> None:
         """ access nested map """
         result = access_nested_map(map, path)
         self.assertEqual(result, expected)
@@ -22,7 +28,12 @@ class TestAccessNestedMap(TestCase):
         ({}, ('a'), KeyError),
         ({'a': 1}, ('a', 'b'), KeyError)
     ])
-    def test_access_nested_map_exception(self, map, path, exception):
+    def test_access_nested_map_exception(
+          self,
+          map: Dict,
+          path: Tuple[str],
+          exception: Exception
+          ) -> None:
         with self.assertRaises(exception):
             access_nested_map(map, path)
 
@@ -34,7 +45,12 @@ class TestGetJson(TestCase):
         ("http://holberton.io", {"payload": False})
     ])
     @patch('requests.get')
-    def test_get_json(self, test_url, test_payload, mock_get):
+    def test_get_json(
+          self,
+          test_url: str,
+          test_payload: Dict,
+          mock_get: Mock
+          ) -> None:
         """ test get_json function """
         mock_get.return_value.json.return_value = test_payload
         response = get_json(test_url)

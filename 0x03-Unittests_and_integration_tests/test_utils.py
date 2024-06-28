@@ -73,7 +73,7 @@ class TestMemoize(unittest.TestCase):
         with patch.object(
             TestClass,
             'a_method',
-            return_value= lambda: 42,
+            return_value=lambda: 42,
         ) as mock_fn:
             test_class = TestClass()
             self.assertEqual(test_class.a_property(), 42)

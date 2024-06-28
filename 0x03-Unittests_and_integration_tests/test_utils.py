@@ -4,7 +4,7 @@ from unittest.mock import patch, Mock
 from utils import access_nested_map, get_json, memoize
 from parameterized import parameterized
 import requests
-from typing import Dict, Tuple, Union
+from typing import Dict, Tuple, Union, Callable
 
 
 class TestAccessNestedMap(unittest.TestCase):
@@ -62,12 +62,14 @@ class TestMemoize(unittest.TestCase):
     def test_memoize(self) -> None:
         """ test_memoize """
         class TestClass:
-
-            def a_method(self):
+            """ Test Class """
+            def a_method(self) -> int:
+                """ a_method """
                 return 42
 
             @memoize
-            def a_property(self):
+            def a_property(self) -> int:
+                """ a_property """
                 return self.a_method()
         with patch.object(
             TestClass,

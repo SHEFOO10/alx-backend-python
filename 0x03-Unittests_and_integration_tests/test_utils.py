@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-from unittest import TestCase
+import unittest
 from unittest.mock import patch, Mock
 from utils import access_nested_map, get_json
 from parameterized import parameterized
@@ -7,7 +7,7 @@ import requests
 from typing import Dict, Tuple, Union
 
 
-class TestAccessNestedMap(TestCase):
+class TestAccessNestedMap(unittest.TestCase):
     """ Test Access Nested Map """
     @parameterized.expand([
         ({"a": 1}, ("a",), 1),
@@ -38,7 +38,7 @@ class TestAccessNestedMap(TestCase):
             access_nested_map(map, path)
 
 
-class TestGetJson(TestCase):
+class TestGetJson(unittest.TestCase):
     """ TestGetJson """
     @parameterized.expand([
         ("http://example.com", {"payload": True}),
@@ -56,3 +56,7 @@ class TestGetJson(TestCase):
         response = get_json(test_url)
         self.assertEqual(response, test_payload)
         mock_get.assert_called_once_with(test_url)
+
+
+class TestMemoize(unittest.TestCase):
+    pass

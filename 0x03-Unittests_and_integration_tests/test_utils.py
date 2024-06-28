@@ -12,7 +12,7 @@ from typing import Dict, Tuple, Union, Callable
 
 class TestAccessNestedMap(unittest.TestCase):
     """ Test Access Nested Map """
-    
+
     @parameterized.expand([
         ({"a": 1}, ("a",), 1),
         ({"a": {"b": 2}}, ("a",), {'b': 2}),
@@ -49,7 +49,7 @@ class TestAccessNestedMap(unittest.TestCase):
 
 class TestGetJson(unittest.TestCase):
     """ TestGetJson """
-    
+
     @parameterized.expand([
         ("http://example.com", {"payload": True}),
         ("http://holberton.io", {"payload": False})
@@ -71,7 +71,7 @@ class TestGetJson(unittest.TestCase):
 
 class TestMemoize(unittest.TestCase):
     """TestMemoize"""
-    
+
     def test_memoize(self) -> None:
         """
         Test memoize decorator to ensure it caches the result correctly.
@@ -86,13 +86,13 @@ class TestMemoize(unittest.TestCase):
             def a_property(self) -> int:
                 """ a_property calls a_method """
                 return self.a_method()
-        
+
         with patch.object(
             TestClass,
             'a_method',
             return_value=42,
         ) as mock_fn:
             test_class = TestClass()
-            self.assertEqual(test_class.a_property(), 42)
-            self.assertEqual(test_class.a_property(), 42)
+            self.assertEqual(test_class.a_property, 42)
+            self.assertEqual(test_class.a_property, 42)
             mock_fn.assert_called_once()

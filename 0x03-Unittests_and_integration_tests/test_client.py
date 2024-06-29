@@ -70,7 +70,7 @@ class TestGithubOrgClient(unittest.TestCase):
         GithubOrgClient.has_license(repo, license_key)
 
 
-def requests_get(*args, **kwargs):
+def requests_get(*args, **kwargs) -> object:
     """
     Function that mocks requests.get function
     Returns the correct json data based on the given input url
@@ -79,10 +79,10 @@ def requests_get(*args, **kwargs):
         """
         Mock response
         """
-        def __init__(self, json_data):
+        def __init__(self, json_data) -> None:
             self.json_data = json_data
 
-        def json(self):
+        def json(self) -> Dict:
             return self.json_data
 
     if args[0] == "https://api.github.com/orgs/google":
@@ -98,6 +98,12 @@ def requests_get(*args, **kwargs):
 )
 class TestIntegrationGithubOrgClient(unittest.TestCase):
     """ TestIntegrationGithubOrgClient """
+    org_payload = None
+    repos_payload = None
+    expected_repos = None
+    apache2_repos = None
+    get_patcher = None
+
     @classmethod
     def setUpClass(cls) -> None:
         """

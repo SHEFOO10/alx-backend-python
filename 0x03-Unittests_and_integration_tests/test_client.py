@@ -112,7 +112,7 @@ class TestIntegrationGithubOrgClient(unittest.TestCase):
     def tearDownClass(cls) -> None:
         cls.get_patcher.stop()
 
-    def test_public_repos(self):
+    def test_public_repos(self) -> None:
         """ test_pubilc_repos """
         self.assertEqual(
             GithubOrgClient('google').public_repos(),

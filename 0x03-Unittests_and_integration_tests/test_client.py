@@ -40,3 +40,23 @@ class TestGithubOrgClient(unittest.TestCase):
                 GithubOrgClient('google')._public_repos_url,
                 'https://api.github.com/orgs/google/repos'
             )
+
+    @patch('client.get_json')
+    def test_public_repos(self, mock_get_json) -> None:
+        """ test_public_repos """
+        payload = {
+            'username': 'donatello',
+            'quote': 'we die with dying, we born with the dead'
+        }
+        mock_get_json.return_value = payload
+        with patch(
+             'client.GithubOrgClient._public_repos_url',
+             new_callable=PropertyMock,
+             return_value=payload
+             ) as mock_public_repos:
+            self.assertEqual(
+                GithubOrgClient('google').org,
+                GithubOrgClient('google')._public_repos_url
+            )
+            mock_get_json.assert_called_once()
+            mock_public_repos.assert_called_once()

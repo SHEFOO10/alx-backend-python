@@ -4,7 +4,7 @@ from client import GithubOrgClient
 from utils import get_json
 from parameterized import parameterized
 import unittest
-from unittest.mock import patch, MagicMock
+from unittest.mock import patch, MagicMock, PropertyMock
 from fixtures import TEST_PAYLOAD
 from typing import Dict
 
@@ -26,3 +26,17 @@ class TestGithubOrgClient(unittest.TestCase):
         mocked_fxn.assert_called_once_with(
             "https://api.github.com/orgs/{}".format(org)
         )
+
+    def test_public_repos_url(self) -> None:
+        """ test_public_repos_url """
+        with patch(
+              'client.GithubOrgClient.org',
+              new_callable=PropertyMock
+              ) as mock_org:
+            mock_org.return_value = {
+                'repos_url': 'https://api.github.com/orgs/google/repos'
+            }
+            self.assertEqual(
+                GithubOrgClient('google')._public_repos_url,
+                'https://api.github.com/orgs/google/repos'
+            )
